@@ -1,0 +1,86 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="PcWatcher.Views.AboutPage"
+             xmlns:xct="http://xamarin.com/schemas/2020/toolkit"  
+             xmlns:xctViews="clr-namespace:Xamarin.CommunityToolkit.UI.Views;assembly=Xamarin.CommunityToolkit"
+             xmlns:vm="clr-namespace:PcWatcher.ViewModels"
+             Title="{Binding Title}">
+    
+    <ContentPage.BindingContext>
+        <vm:AboutViewModel />
+    </ContentPage.BindingContext>
+    
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Color x:Key="Accent">#96d1ff</Color>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        
+        <ScrollView Grid.Row="1">
+            <StackLayout Orientation="Vertical" Padding="30,24,30,24" Spacing="10">
+                <Frame Padding="10" Margin="0" CornerRadius="10">
+                    <xctViews:Expander State="Expanded">
+                        <xctViews:Expander.Header>
+                            <Label FontSize="16" FontAttributes="Bold" Text="Parameters"/>
+                        </xctViews:Expander.Header>
+
+                        <StackLayout>
+                            <Entry Text="{Binding IpAddress}" Placeholder="Address"></Entry>
+                            <Button Margin="0,10,0,0" Text="Save"
+                        Command="{Binding SaveParamsCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                        </StackLayout>
+
+                    </xctViews:Expander>
+                </Frame>
+                <Frame Padding="10" Margin="0" CornerRadius="10">
+                    <xctViews:Expander State="Expanded">
+                        <xctViews:Expander.Header>
+                            <Label FontSize="16" FontAttributes="Bold" Text="Set Time"/>
+                        </xctViews:Expander.Header>
+
+                        <StackLayout>
+                            <TimePicker x:Name="_timePicker" Time="{Binding Time}" PropertyChanged="TimePicker_PropertyChanged"></TimePicker>
+                            <Button Margin="0,10,0,0" Text="Set time"
+                        Command="{Binding SetTimeToNotifyCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                        </StackLayout>
+
+                    </xctViews:Expander>
+                </Frame>
+
+                <Frame Padding="10" Margin="0" CornerRadius="10">
+                    <xctViews:Expander State="Expanded">
+                        <xctViews:Expander.Header>
+                            <Label FontSize="16" FontAttributes="Bold" Text="Send Message"/>
+                        </xctViews:Expander.Header>
+
+                        <StackLayout>
+                            <Frame Padding="4" CornerRadius="10">
+                                <Entry Text="{Binding Message}" Placeholder="Enter Your Message Here"/>
+                            </Frame>
+                           
+                            <Button Margin="0,10,0,0" Text="Send Message"
+                        Command="{Binding SendMessageCommand}"
+                        BackgroundColor="{StaticResource Primary}"
+                        TextColor="White" />
+                        </StackLayout>
+
+                    </xctViews:Expander>
+                </Frame>
+                
+                
+            </StackLayout>
+        </ScrollView>
+    </Grid>
+
+</ContentPage>
