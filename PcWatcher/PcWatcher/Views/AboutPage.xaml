@@ -68,7 +68,7 @@
                             <Frame Padding="4" CornerRadius="10">
                                 <Entry Text="{Binding Message}" Placeholder="Enter Your Message Here"/>
                             </Frame>
-                           
+
                             <Button Margin="0,10,0,0" Text="Send Message"
                         Command="{Binding SendMessageCommand}"
                         BackgroundColor="{StaticResource Primary}"
@@ -77,8 +77,24 @@
 
                     </xctViews:Expander>
                 </Frame>
-                
-                
+                <Frame Padding="10" Margin="0" CornerRadius="10">
+                    <xctViews:Expander State="Expanded">
+                        <xctViews:Expander.Header>
+                            <Label FontSize="16" FontAttributes="Bold" Text="Stop Watcher"/>
+                        </xctViews:Expander.Header>
+
+                        <StackLayout>
+
+                            <Button Margin="0,10,0,0" Text="Stop Watcher"
+                        Command="{Binding CloseWatcherCommand}"
+                        BackgroundColor="Red"
+                        TextColor="White" />
+                        </StackLayout>
+
+                    </xctViews:Expander>
+                </Frame>
+
+
             </StackLayout>
         </ScrollView>
     </Grid>

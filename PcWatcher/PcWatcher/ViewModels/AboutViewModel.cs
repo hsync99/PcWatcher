@@ -61,12 +61,19 @@ namespace PcWatcher.ViewModels
             c.Parameter = DTNext.ToString();
             c.Command = 1;
             //IpAddress = "http://192.168.0.106:8888/connection/";
-          
-            var response = await RestRequest.SetTime(c, IpAddress);
-            Dictionary<string, string> data = new Dictionary<string, string>();
-            var d = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
-            var result = d.TryGetValue("response", out string value);
-            await ShowWarning("Succesfull!", value);
+            try
+            {
+                var response = await RestRequest.SetTime(c, IpAddress);
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                var d = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
+                var result = d.TryGetValue("response", out string value);
+                await ShowWarning("Succesfull!", value);
+            }
+            catch(Exception e)
+            {
+                await ShowWarning("Error!", e.Message);
+            }
+        
             
 
         }
@@ -77,17 +84,40 @@ namespace PcWatcher.ViewModels
             c.Parameter = Message;
             c.Command = 3;
             //IpAddress = "http://192.168.0.106:8888/connection/";
-
-            var response = await RestRequest.SendMessage(c, IpAddress);
-          Dictionary<string,string> data = new Dictionary<string,string>();
-            var d = JsonConvert.DeserializeObject<Dictionary<string,string>>(response);
-            var result = d.TryGetValue("response",out string value);
-            await ShowWarning("Succesfull!",value);
-            Message = String.Empty;
+            try
+            {
+                var response = await RestRequest.SendMessage(c, IpAddress);
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                var d = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
+                var result = d.TryGetValue("response", out string value);
+                await ShowWarning("Success!", value);
+                Message = String.Empty;
+            }
+            catch (Exception e)
+            {
+                await ShowWarning("Error!", e.Message);
+            }
+           
         }
         public async void CloseWatcher()
         {
+            Commands c = new Commands();
 
+            c.Parameter = "";
+            c.Command = 4;
+            try
+            {
+                var response = await RestRequest.SendMessage(c, IpAddress);
+                Dictionary<string, string> data = new Dictionary<string, string>();
+                var d = JsonConvert.DeserializeObject<Dictionary<string, string>>(response);
+                var result = d.TryGetValue("response", out string value);
+                await ShowWarning("Success!", value);
+                Message = String.Empty;
+            }
+            catch (Exception e)
+            {
+                await ShowWarning("Error!", e.Message);
+            }
         }
         public async void ShutDown()
         {
